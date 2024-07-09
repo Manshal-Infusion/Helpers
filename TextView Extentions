@@ -1,0 +1,13 @@
+import android.widget.TextView
+import android.graphics.LinearGradient
+import android.graphics.Shader
+
+
+private fun TextView.textGradient(text: String, colors: IntArray) {
+    val width = paint.measureText(text)
+    val height = textSize
+    val shader = LinearGradient(
+        0f, 0f, width, height, colors, null, Shader.TileMode.CLAMP
+    )
+    paint.shader = shader
+}
