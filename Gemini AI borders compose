@@ -1,0 +1,54 @@
+var deg by remember {
+                    mutableIntStateOf(0)
+                }
+
+                LaunchedEffect(key1 = true) {
+                    while (true){
+                        delay(20)
+                        deg += 2
+                    }
+                }
+
+
+                val color1 = Color.Cyan
+                val color2 = Color.Magenta
+                val gradient = Brush.sweepGradient(listOf(Color.White, Color.White  , color1,  color2, color2,),)
+
+                Box(modifier = Modifier.fillMaxSize().background(Color.Black), contentAlignment = Alignment.Center){
+                    Surface(
+                        shape = RoundedCornerShape(24.dp)
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .drawWithContent {
+                                    rotate(deg.toFloat()) {
+                                        /*drawArc(
+                                            gradient,
+                                            90f,
+                                            180f,
+                                            true,
+                                            size = Size(360.dp.toPx(), 360.dp.toPx())
+                                        )*/
+                                        drawCircle(
+                                            gradient,
+                                            radius = 360f
+                                        )
+                                    }
+                                    drawContent()
+                                },
+                            shape = RoundedCornerShape(24.dp)
+
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.car),
+                                contentDescription = null,
+                                Modifier
+                                    .padding(16.dp)
+                                    .size(128.dp)
+                                    .zIndex(1f)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                        }
+                    }
+                }
