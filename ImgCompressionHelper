@@ -1,0 +1,36 @@
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import com.bumptech.glide.Glide
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import javax.inject.Inject
+
+private const val TAG = "BitmapHelper"
+
+class CompressionHelper @Inject constructor(
+    @ApplicationContext val context: Context
+) {
+
+    suspend fun createCompressedImgFromUri(fileUri: Uri): File {
+        return withContext(Dispatchers.IO){
+
+            val bitmap = Glide.with(context)
+                .asBitmap()
+                .load(fileUri)
+                .override(900,1200)
+                .submit()
+                .get()
+
+            val path = context.filesDir
+            val file = File(path, "bmp${System.currentTimeMillis()}.jpeg")
+            FileOutputStream(file).use { fos ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            }
+            file
+        }
+    }
+}
