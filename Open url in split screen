@@ -1,0 +1,4 @@
+fun openUrlInAdjacentWindow(url:
+String) { Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url)
+addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+ }.also { intent -> startActivity(intent) } }
